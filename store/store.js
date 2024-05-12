@@ -1,10 +1,10 @@
-/* eslint-disable no-undef */
 import {configureStore} from '@reduxjs/toolkit'
 import authSlice from './authSlice'
- const store = configureStore({
-    reducer :{
-        auth : authSlice.reducer,
-    }
- })
 
- export default store
+const store = configureStore({
+    reducer : {
+        auth : authSlice
+    }
+})
+
+export default store 

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {createSlice} from '@reduxjs/toolkit'
-
+import axios from 'axios'
+import STATUSES from '../src/globals/status/statuses'
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -30,9 +31,14 @@ export function register(data){
         dispatch(setStatus(STATUSES.LOADING))
   try{
     const response =  await axios.post('https://react30.onrender.com/api/user/register',data)
-    if(response.status === 200){
-        dispatch(setStatus(STATUSES.SUCCESS))
+    if(response.status === 201){
         dispatch(setUser(data))
+// check the status value
+// status -> success -> navigate to login else error
+
+
+        dispatch(setStatus(STATUSES.SUCCESS))
+
 
 
      }else{
