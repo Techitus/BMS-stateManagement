@@ -1,35 +1,33 @@
 /* eslint-disable no-undef */
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import STATUSES from "../src/globals/status/statuses";
+import API from "../src/http";
 
 const blogSlice= createSlice({
     name: "blog",
     initialState : {
-        user: null,
-        token: null,
+        data: null,
         status: null,
     },
     reducers : {
 
-        setUser(state, action){
+        setBlog(state, action){
             state.user = action.payload
         },
-        setToken(state,action){
-            state.token = action.payload
-        },
+    
         setStatus(state,action){
             state.status = action.payload
         }
     }
 })
-export const {setTitle, setDescription,setImage, setCategory,setSubtitle} = blogSlice.actions
+export const {setBlog,setStatus} = blogSlice.actions
 export default blogSlice.reducer
 
 export const createBlog = (data)=>{
     return async function createBlogThunk(dispatch){
+        dispatch(setStatus(STATUSES.LOADING))
         try {
-            const response = await axios.get('https://react30.onrender.com/api/user/blog',data,
+            const response = await  API.post('blog',data,
         {
             headers : {
                 "Content-Type" : "multipart/form-data",
@@ -37,7 +35,48 @@ export const createBlog = (data)=>{
             }
         })
             if(response.status === 201){
-                dispatch(setUser(data))
+                dispatch(setStatus(STATUSES.SUCCESS))
+            }else{
+                dispatch(setStatus(STATUSES.ERROR))
+            }
+
+        } catch(error){
+            dispatch(setStatus(STATUSES.ERROR))
+        }
+    } 
+
+}
+export const fetchBlog = ()=>{
+    return async function fetchBlogThunk(dispatch){
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const response = await  API.get('blog',data)
+            if(response.status === 200 && response.data.blog.length >0 ){
+                dispatch(setBlog(response.data.blog))
+                dispatch(setStatus(STATUSES.SUCCESS))
+            }else{
+                dispatch(setStatus(STATUSES.ERROR))
+            }
+
+        } catch(error){
+            dispatch(setStatus(STATUSES.ERROR))
+        }
+    } 
+
+}
+export const deleteBlog = (id,token)=>{
+    return async function deleteBlogThunk(dispatch){
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const response = await  API.delete(`blog/${id}`,data,
+            {
+                headers : {
+                    token : token
+                }
+            }
+        )
+            if(response.status === 200){
+                dispatch(setStatus(STATUSES.SUCCESS))
             }else{
                 dispatch(setStatus(STATUSES.ERROR))
             }
