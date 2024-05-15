@@ -5,11 +5,14 @@ import Layout from '../../components/layout/Layout'
 import Form from './components/form/Form'
 import { createBlog } from '../../../store/blogSlice'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const AddBlog = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handleCreate = (data)=>{
     dispatch(createBlog(data))
+    navigate("/")
 
 
   }

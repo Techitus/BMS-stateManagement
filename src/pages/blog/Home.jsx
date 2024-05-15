@@ -1,4 +1,4 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
 import Navbar from '../../components/navbar/Navbar'
 import Layout from '../../components/layout/Layout'
 import Card from './components/card/Card'

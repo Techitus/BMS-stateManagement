@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const Form = ({type,onSubmit, user}) => {
+const Form = ({type,onSubmit,user}) => {
     const [data,setData] = useState({
         email : '',
         username : '',
@@ -32,8 +32,8 @@ const Form = ({type,onSubmit, user}) => {
                         { type === 'Login' ? 'Login here to continue...' : 'Register here to continue...' }
                     </h1>
                 </div>
-                {type === 'Login' && `Hello ${user?.username}`}
-                
+                { type === 'Login' &&  `Hello, ${user?.username}`}
+                {/* <p>Hello, {user?.username}</p> */}
          <form onSubmit={handleSubmit}>
          <div className="divide-y divide-gray-200">
                     <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">

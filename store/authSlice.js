@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import {createSlice} from '@reduxjs/toolkit'
-import axios from 'axios'
 import STATUSES from '../src/globals/status/statuses'
 import API from '../src/http'
 const authSlice = createSlice({
@@ -54,11 +53,12 @@ export function register(data){
 
 export function login(data){
     return async function loginThunk(dispatch){
+        
       try{
         const response =  await API.post('login',data)
         if(response.status === 200 && response.data.token){
-            dispatch(setStatus(STATUSES.SUCCESS))
             dispatch(setToken(response.data.token))
+            dispatch(setStatus(STATUSES.SUCCESS))
             
         }else{
 
