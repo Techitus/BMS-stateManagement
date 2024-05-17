@@ -23,8 +23,6 @@ useEffect(()=>{
    navigate('/login') 
    dispatch(setStatus(null))
 
-  }else{
-    navigate("/register")
   }
 },[status])
 

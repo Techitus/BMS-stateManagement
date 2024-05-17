@@ -8,17 +8,16 @@ import { useEffect } from 'react'
 
 const Login = () => {
   const navigate = useNavigate()
- const {user,status} = useSelector((state)=>state.auth)
+ const {user,status,token} = useSelector((state)=>state.auth)
   const dispatch = useDispatch()
   const handleLogin = (data)=>{
     dispatch(login(data))
   }
   useEffect(()=>{
     if(status === STATUSES.SUCCESS){
+      localStorage.setItem('jwtToken',token)
       navigate('/')
        dispatch(setStatus(null))
-    }else{
-      navigate('/login')
     }
   },[status])
   return (
