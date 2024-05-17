@@ -27,13 +27,7 @@ export const createBlog = (data)=>{
     return async function createBlogThunk(dispatch){
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const response = await  API.post('blog',data,
-        {
-            headers : {
-                "Content-Type" : "multipart/form-data",
-                "Authorization " : localStorage.getItem('token')
-            }
-        })
+            const response = await  API.post('blog',data)
             if(response.status === 201){
                 dispatch(setStatus(STATUSES.SUCCESS))
             }else{
