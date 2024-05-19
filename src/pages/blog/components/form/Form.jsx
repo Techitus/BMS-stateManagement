@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
 
-import { useState } from "react"
+import {  useState } from "react"
 
 const Form = ({type, onSubmit}) => {
 	const[data,setData] = useState({
@@ -11,6 +11,7 @@ const Form = ({type, onSubmit}) => {
 		image: '',
 
 	})
+	
 	const handleChange = (e)=>{
 const {name,value } = e.target
 		setData({

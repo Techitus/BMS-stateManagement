@@ -6,13 +6,13 @@ import API from "../src/http";
 const blogSlice= createSlice({
     name: "blog",
     initialState : {
-        data: null,
+        inputData: null,
         status: null,
     },
     reducers : {
 
-        setBlog(state, action){
-            state.user = action.payload
+        setinputData(state, action){
+            state.inputData = action.payload
         },
     
         setStatus(state,action){
@@ -20,7 +20,7 @@ const blogSlice= createSlice({
         }
     }
 })
-export const {setBlog,setStatus} = blogSlice.actions
+export const {setinputData,setStatus} = blogSlice.actions
 export default blogSlice.reducer
 
 export const createBlog = (data)=>{
@@ -40,13 +40,13 @@ export const createBlog = (data)=>{
     } 
 
 }
-export const fetchBlog = ()=>{
+export function fetchBlog(){
     return async function fetchBlogThunk(dispatch){
         dispatch(setStatus(STATUSES.LOADING))
         try {
-            const response = await  API.get('blog',data)
-            if(response.status === 200 && response.data.blog.length >0 ){
-                dispatch(setBlog(response.data.blog))
+            const response = await  API.get('blog')
+            if(response.status === 200 && response.data.data.length > 0 ){
+                dispatch(setinputData(response.data.data))
                 dispatch(setStatus(STATUSES.SUCCESS))
             }else{
                 dispatch(setStatus(STATUSES.ERROR))
