@@ -8,6 +8,7 @@ const blogSlice= createSlice({
     initialState : {
         inputData: null,
         status: null,
+        deleteStatus : null,
     },
     reducers : {
 
@@ -18,10 +19,13 @@ const blogSlice= createSlice({
     
         setStatus(state,action){
             state.status = action.payload
+        },
+        setDeleteStatus(state,action){
+            state.deleteStatus = action.payload
         }
     }
 })
-export const {setinputData,setStatus} = blogSlice.actions
+export const {setinputData,setStatus,setDeleteStatus} = blogSlice.actions
 export default blogSlice.reducer
 
 export const createBlog = (data)=>{
@@ -59,29 +63,23 @@ export function fetchBlog(){
     } 
 
 }
-// export const deleteBlog = (id,token)=>{
-//     return async function deleteBlogThunk(dispatch){
-//         dispatch(setStatus(STATUSES.LOADING))
-//         try {
-//             const response = await  API.delete(`blog/${id}`,data,
-//             {
-//                 headers : {
-//                     token : token
-//                 }
-//             }
-//         )
-//             if(response.status === 200){
-//                 dispatch(setStatus(STATUSES.SUCCESS))
-//             }else{
-//                 dispatch(setStatus(STATUSES.ERROR))
-//             }
+export const deleteBlog = (id)=>{
+    return async function deleteBlogThunk(dispatch){
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+            const response = await  API.delete(`blog/${id}`)
+            if(response.status === 200){
+                dispatch(setDeleteStatus(true))
+            }else{
+                dispatch(setDeleteStatus(null))           
+             }
 
-//         } catch(error){
-//             dispatch(setStatus(STATUSES.ERROR))
-//         }
-//     } 
+        } catch(error){
+            dispatch(setDeleteStatus(false))     
+           }
+    } 
 
-// }
+}
 export function fetchSingleBlog(id) {
     return async function fetchSingleBlogThunk(dispatch) {
       setStatus(STATUSES.LOADING);

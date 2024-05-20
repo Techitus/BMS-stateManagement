@@ -1,18 +1,34 @@
+/* eslint-disable no-undef */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from '../../components/layout/Layout'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
-import { fetchSingleBlog } from '../../../store/blogSlice'
+import {  deleteBlog, fetchSingleBlog, setDeleteStatus } from '../../../store/blogSlice'
 
 const SingleBlog = () => {
+    const navigate = useNavigate()
     const { id }= useParams()
-    const {inputData} = useSelector((state) => state.blog)
+    const {inputData,deleteStatus} = useSelector((state) => state.blog)
     console.log(inputData)
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(fetchSingleBlog(id))
     },[])
+
+    const handleDeleteBlog = ()=>{
+     dispatch(deleteBlog(id))
+     
+    }
+useEffect(()=>{
+    if(deleteStatus === true){
+        // eslint-disable-next-line no-undef
+        dispatch(setDeleteStatus(null))
+        localStorage.setItem('jwtToken',token)
+        navigate('/')
+    }
+},[deleteStatus])
 
   return (
     <Layout>
@@ -29,7 +45,7 @@ const SingleBlog = () => {
                         <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Edit</button> 
                         </Link>
                     </div>
-                    <div className="w-1/2 px-2">
+                    <div onClick={handleDeleteBlog} className="w-1/2 px-2">
                         <button className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Delete</button>
                     </div>
                 </div>
