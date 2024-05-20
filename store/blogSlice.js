@@ -9,6 +9,7 @@ const blogSlice= createSlice({
         inputData: null,
         status: null,
         deleteStatus : null,
+        editStatus : null
     },
     reducers : {
 
@@ -22,10 +23,13 @@ const blogSlice= createSlice({
         },
         setDeleteStatus(state,action){
             state.deleteStatus = action.payload
+        },
+        setEditStatus(state,action){
+            state.editStatus = action.payload
         }
     }
 })
-export const {setinputData,setStatus,setDeleteStatus} = blogSlice.actions
+export const {setinputData,setStatus,setDeleteStatus, setEditStatus} = blogSlice.actions
 export default blogSlice.reducer
 
 export const createBlog = (data)=>{
@@ -94,4 +98,23 @@ export function fetchSingleBlog(id) {
         dispatch(setStatus(STATUSES.ERROR));
       }
     };
+  }
+
+  export function editBlog(data, id){
+    return async function editBlogThunk(dispatch){
+        dispatch(setStatus(STATUSES.LOADING))
+        try {
+       const response =  await API.patch(`blog/${id}`,data)
+       if(response.status === 200)
+       {
+        dispatch(setEditStatus(true))
+       } else{
+        dispatch(setEditStatus(null))
+       }
+
+        }catch(error){
+            dispatch(setStatus(STATUSES.ERROR))
+        }
+    }
+    
   }
