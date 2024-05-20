@@ -10,17 +10,17 @@ import { useEffect } from 'react'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const {inputData }= useSelector((store) => store.blog);
+  const {inputData }= useSelector((state) => state.blog);
   console.log(inputData)
  useEffect(()=>{
   dispatch(fetchBlog())
- },[dispatch])
+ },[])
   return (
    <Layout>
-  <div className='flex flex-wrap justify-center space-x-5 mt-6 '>
+  <div  className='flex flex-wrap justify-center space-x-5 mt-6 '>
   {  inputData &&
   inputData.map((data) => {
-  return <Card key={data.id} data={data} />;
+  return <Card key={data.id}  data={data} />;
 })}
 
     

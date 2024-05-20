@@ -14,6 +14,7 @@ const blogSlice= createSlice({
         setinputData(state, action){
             state.inputData = action.payload
         },
+       
     
         setStatus(state,action){
             state.status = action.payload
@@ -58,26 +59,41 @@ export function fetchBlog(){
     } 
 
 }
-export const deleteBlog = (id,token)=>{
-    return async function deleteBlogThunk(dispatch){
-        dispatch(setStatus(STATUSES.LOADING))
-        try {
-            const response = await  API.delete(`blog/${id}`,data,
-            {
-                headers : {
-                    token : token
-                }
-            }
-        )
-            if(response.status === 200){
-                dispatch(setStatus(STATUSES.SUCCESS))
-            }else{
-                dispatch(setStatus(STATUSES.ERROR))
-            }
+// export const deleteBlog = (id,token)=>{
+//     return async function deleteBlogThunk(dispatch){
+//         dispatch(setStatus(STATUSES.LOADING))
+//         try {
+//             const response = await  API.delete(`blog/${id}`,data,
+//             {
+//                 headers : {
+//                     token : token
+//                 }
+//             }
+//         )
+//             if(response.status === 200){
+//                 dispatch(setStatus(STATUSES.SUCCESS))
+//             }else{
+//                 dispatch(setStatus(STATUSES.ERROR))
+//             }
 
-        } catch(error){
-            dispatch(setStatus(STATUSES.ERROR))
-        }
-    } 
+//         } catch(error){
+//             dispatch(setStatus(STATUSES.ERROR))
+//         }
+//     } 
 
-}
+// }
+export function fetchSingleBlog(id) {
+    return async function fetchSingleBlogThunk(dispatch) {
+      setStatus(STATUSES.LOADING);
+      try {
+        const response = await API.get(`blog/${id}`);
+        if (response.status === 200) {
+            dispatch(setStatus(STATUSES.SUCCESS));
+            dispatch(setinputData(response.data.data));
+        } 
+      } catch (error) {
+        console.log(error?.res?.data?.message);
+        dispatch(setStatus(STATUSES.ERROR));
+      }
+    };
+  }
