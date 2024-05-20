@@ -1,14 +1,13 @@
-import React from 'react'
-import Navbar from '../navbar/Navbar'
+/* eslint-disable react/prop-types */
+import Navbar from "../navbar/Navbar";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
-   <>
-   <Navbar /> 
-   {children}
-   
-   </>
-  )
-}
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
+};
 
-export default Layout
+export default Layout;

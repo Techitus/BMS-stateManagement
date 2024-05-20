@@ -42,7 +42,6 @@ const handleChange =(e) =>{
 // eslint-disable-next-line no-unused-vars
 
 }
-console.log(data)
 const  handleEditSubmit = (e)=>{
   e.preventDefault()
   dispatch(editBlog(data,id))

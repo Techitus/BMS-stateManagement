@@ -1,34 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import  { useEffect } from 'react'
-import Form from './components/form/Form'
-import { register, setStatus } from '../../../store/authSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import STATUSES from '../../globals/status/statuses'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from "react";
+import Form from "./components/form/Form";
+import { register, setStatus } from "../../../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import STATUSES from "../../globals/status/statuses";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const {status} = useSelector((state)=>state.auth)
-  console.log(status)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
- const handleRegister = (data)=>{
-  dispatch(register(data))
- }
+  const { status } = useSelector((state) => state.auth);
+  console.log(status);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleRegister = (data) => {
+    dispatch(register(data));
+  };
 
-useEffect(()=>{
-  
-  // check the status value 
-  // status--> success -> navigate to login page else register page
-  if(status === STATUSES.SUCCESS){
-   navigate('/login') 
-   dispatch(setStatus(null))
+  useEffect(() => {
+    // check the status value
+    // status--> success -> navigate to login page else register page
+    if (status === STATUSES.SUCCESS) {
+      navigate("/login");
+      dispatch(setStatus(null));
+    }
+  }, [status]);
 
-  }
-},[status])
+  return <Form type="Register" onSubmit={handleRegister} />;
+};
 
-  return (
-    <Form type='Register' onSubmit={handleRegister}/>
-  )
-}
-
-export default Register
+export default Register;
