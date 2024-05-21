@@ -28,7 +28,7 @@ const SingleBlog = () => {
     if (deleteStatus === true) {
       // eslint-disable-next-line no-undef
       dispatch(setDeleteStatus(null));
-      localStorage.setItem("jwtToken", token);
+      localStorage.setItem("jwtToken",token);
       navigate("/");
     }
   }, [deleteStatus]);
