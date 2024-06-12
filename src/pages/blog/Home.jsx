@@ -6,15 +6,20 @@ import Layout from "../../components/layout/Layout";
 import Card from "./components/card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBlog } from "../../../store/blogSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const { inputData } = useSelector((state) => state.blog);
   console.log(inputData);
   useEffect(() => {
     dispatch(fetchBlog());
+    setIsLoading(false);
   }, []);
+  if(isLoading){
+    return <h1>Loading...</h1>
+  }
   return (
     <Layout>
       <div className="flex flex-wrap justify-center space-x-5 mt-6 ">
